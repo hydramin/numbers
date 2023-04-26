@@ -1,12 +1,16 @@
-a
-b
-c
-d
-e
-f
-1
-2
-3
+If you are using systemctl, you do not need the System V init script I provided earlier. Instead, you should create a systemd service file. Here's a recap of how to create and configure a systemd service for your Spring Boot application:
+
+    Create a new service file for your application:
+
+bash
+
+sudo nano /etc/systemd/system/my-spring-boot-app.service
+
+Replace my-spring-boot-app with a name that represents your application.
+
+    Add the following content to the service file:
+
+ini
 
 [Unit]
 Description=My Spring Boot Application
@@ -23,3 +27,41 @@ RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
+
+Remember to replace myappuser and /path/to/your/spring-boot-app.jar with appropriate values for your application.
+
+    Reload the systemd daemon to recognize the new service:
+
+bash
+
+sudo systemctl daemon-reload
+
+    Enable the service to start on boot:
+
+bash
+
+sudo systemctl enable my-spring-boot-app
+
+    Start the service:
+
+bash
+
+sudo systemctl start my-spring-boot-app
+
+Now you can use systemctl to manage your Spring Boot application:
+
+    Check the status: sudo systemctl status my-spring-boot-app
+    Start the service: sudo systemctl start my-spring-boot-app
+    Stop the service: sudo systemctl stop my-spring-boot-app
+    Restart the service: sudo systemctl restart my-spring-boot-app
+
+By using a systemd service file, you can manage your Spring Boot application with systemctl and do not need the System V init script.
+b
+c
+d
+e
+f
+1
+2
+3
+
