@@ -7,3 +7,46 @@ f
 1
 2
 3
+
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          my-spring-boot-app
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: My Spring Boot Application
+# Description:       Start and stop the Spring Boot application
+### END INIT INFO
+
+APP_NAME=my-spring-boot-app
+APP_USER=myappuser
+APP_JAR=/path/to/your/spring-boot-app.jar
+
+start() {
+    echo "Starting $APP_NAME..."
+    sudo -u $APP_USER /usr/bin/java -jar $APP_JAR > /dev/null 2>&1 &
+}
+
+stop() {
+    echo "Stopping $APP_NAME..."
+    sudo pkill -f $APP_JAR
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
